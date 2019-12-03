@@ -78,10 +78,10 @@ class CompanyController extends Controller
     {
         $company = Company::findOrFail($id);
         return view('admin.editCompany', [
-//            'name'    => $company->name,
-//            'email'    => $company->email,
-//            'logo'    => $company->logo,
-//            'website' => $company->website,
+            'name'    => $company->name,
+            'email'    => $company->email,
+            'logo'    => $company->logo,
+            'website' => $company->website,
             'company' => $company
         ]);
     }
@@ -97,7 +97,7 @@ class CompanyController extends Controller
     {
         $request->validated();
         $this->companyService->updateCompany($request, $id);
-        return redirect()->route('employers.index');
+        return redirect()->route('companies.index');
     }
 
     /**
