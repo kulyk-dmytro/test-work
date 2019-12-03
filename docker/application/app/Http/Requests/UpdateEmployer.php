@@ -28,7 +28,8 @@ class UpdateEmployer extends FormRequest
             'first_name' => 'max:255',
             'last_name' => 'max:255',
             'email' => 'email',
-            'phone' => 'regex:/(01)[0-9]{9}/',
+//            'phone' => 'regex:/(01)[0-9]{9}/',
+            'phone' => 'required|numeric',
             'company_id' => 'exists:companies,id',
         ];
     }

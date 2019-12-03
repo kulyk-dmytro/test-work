@@ -80,11 +80,12 @@ class EmployerController extends Controller
     {
         $employer = Employer::with('company')->findOrFail($id);
         return view('admin.editEmployer', [
-//            'first_name'    => $employer->first_name,
-//            'last_name'    => $employer->last_name,
-//            'email'    => $employer->email,
-//            'phone' => $employer->phone,
-//            'company_id' => $employer->company_id,
+            'first_name'    => $employer->first_name,
+            'last_name'    => $employer->last_name,
+            'email'    => $employer->email,
+            'phone' => $employer->phone,
+            'company_id' => $employer->company_id,
+            'companies' => Company::get(),
             'employer' => $employer
         ]);
     }
