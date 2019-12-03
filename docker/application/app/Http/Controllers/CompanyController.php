@@ -3,11 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\Http\Requests\UpdateCompany;
+use App\Services\CompanyService;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreCompany;
 
 class CompanyController extends Controller
 {
+    private $companyService;
+
+    public function __construct(CompanyService $companyService)
+    {
+        $this->companyService = $companyService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -42,17 +51,8 @@ class CompanyController extends Controller
      */
     public function store(StoreCompany $request)
     {
-        dd($request->all());
-
-        $validatedData = $request->validated();
-
-        $company = Company::create([
-            'name'    => $request->input('name'),
-            'email'    => $request->input('email'),
-            'logo'    => $request->input('logo'),
-            'website' => $request->input('website'),
-        ]);
-
+        $request->validated();
+        $this->companyService->storeCompany($request);
         return redirect()->route('companies.index');
     }
 
@@ -93,9 +93,11 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCompany $request, $id)
     {
-        //
+        $request->validated();
+        $this->companyService->updateCompany($request, $id);
+        return redirect()->route('employers.index');
     }
 
     /**
@@ -106,8 +108,7 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-        $company = Company::findOrFail($id);
-        $company->delete();
+        $this->companyService->destroyCompany($id);
         return redirect()->route('companies.index')->with('messageSuccess', 'Delete success!');
         //to do return with message and display on the screen
     }

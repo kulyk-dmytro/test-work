@@ -28,7 +28,8 @@ class StoreEmployer extends FormRequest
             'first_name' => 'required|max:255',
             'last_name' => 'required|required|max:255',
             'email' => 'required|email',
-            'phone' => 'required|regex:/(01)[0-9]{9}/',
+//            'phone' => 'required|regex:/(01)[0-9]{9}/',
+            'phone' => 'required|numeric',
             'company_id' => 'required|exists:companies,id',
         ];
     }

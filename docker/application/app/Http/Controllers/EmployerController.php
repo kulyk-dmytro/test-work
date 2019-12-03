@@ -4,11 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\Employer;
+use App\Http\Requests\UpdateEmployer;
+use App\Services\EmployerService;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreEmployer;
 
 class EmployerController extends Controller
 {
+    private $employerService;
+
+    public function __construct(EmployerService $employerService)
+    {
+        $this->employerService = $employerService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -43,16 +52,8 @@ class EmployerController extends Controller
      */
     public function store(StoreEmployer $request)
     {
-        $validatedData = $request->validated();
-
-        $employer = Employer::create([
-            'first_name'    => $request->input('first_name'),
-            'last_name'    => $request->input('last_name'),
-            'email'    => $request->input('email'),
-            'phone'    => $request->input('phone'),
-            'company_id' => intval($request->input('company_id')),
-        ]);
-
+        $request->validated();
+        $this->employerService->storeEmployer($request);
         return redirect()->route('employers.index');
 
     }
@@ -95,9 +96,11 @@ class EmployerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateEmployer $request, $id)
     {
-        //
+        $request->validated();
+        $this->employerService->updateEmployer($request, $id);
+        return redirect()->route('employers.index');
     }
 
     /**
@@ -108,8 +111,7 @@ class EmployerController extends Controller
      */
     public function destroy($id)
     {
-        $employer = Employer::findOrFail($id);
-        $employer->delete();
+        $this->employerService->destroyEmployer($id);
         return redirect()->route('employers.index')->with('messageSuccess', 'Delete success!');
         //to do return with message and display on the screen
     }
