@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Company;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyService
 {
@@ -10,7 +11,7 @@ class CompanyService
         $company = Company::create([
             'name'    => $request->input('name'),
             'email'    => $request->input('email'),
-            'logo'    => $request->input('logo'),
+            'logo'    => $request->file('logo')->store('public'),
             'website' => $request->input('website'),
         ]);
 
@@ -22,7 +23,7 @@ class CompanyService
         $companyUpdated = $company->update([
             'name'    => $request->input('name'),
             'email'    => $request->input('email'),
-            'logo'    => $request->input('logo'),
+            'logo'    => $request->file('logo')->store('public'),
             'website' => $request->input('website'),
         ]);
         return $companyUpdated;

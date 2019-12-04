@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Services\EmployerService;
 
 class EmployerServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,9 @@ class EmployerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind('App\Services\EmployerService', function ($app) {
+            return new EmployerService();
+        });
     }
 
     /**

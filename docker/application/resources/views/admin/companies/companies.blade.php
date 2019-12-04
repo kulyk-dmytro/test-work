@@ -44,7 +44,7 @@
                             <th scope="row">{{$company->id}}</th>
                             <td>{{$company->name}}</td>
                             <td>{{$company->email}}</td>
-                            <td><img src="{{$company->logo}}" alt="img" class="img-thumbnail rounded-circle" width="200"></td>
+                            <td><img src="{{ asset('storage/' . $company->logo) }}" alt="img" class="img-thumbnail rounded-circle" width="200"></td>
                             <td>{{$company->website}}</td>
                             @if(\Illuminate\Support\Facades\Auth::check())
                                 @if(\Illuminate\Support\Facades\Auth::user()->isAdmin())

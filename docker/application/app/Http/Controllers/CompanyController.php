@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCompany;
 use App\Services\CompanyService;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreCompany;
+use Illuminate\Pagination\Paginator;
 
 class CompanyController extends Controller
 {
@@ -22,10 +23,20 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $companies = Company::paginate(5);
-        return view('admin.companies', ['companies' => $companies]);
+        //$currentPage - which pagination page to display, by default the first
+        //$perPage - how many default items to display per page
+
+//        $currentPage = $request->input('current_page' , 1);
+        $perPage = $request->input('per_page', 5);
+
+//        Paginator::currentPageResolver(function () use ($currentPage) {
+//            return $currentPage;
+//        });
+
+        $companies = Company::paginate($perPage);
+        return view('admin.companies.companies', ['companies' => $companies]);
     }
 
     /**
@@ -35,7 +46,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('admin.createCompany', [
+        return view('admin.companies.createCompany', [
             'name'    => [],
             'email'    => [],
             'logo'    => [],
@@ -77,7 +88,7 @@ class CompanyController extends Controller
     public function edit($id)
     {
         $company = Company::findOrFail($id);
-        return view('admin.editCompany', [
+        return view('admin.companies.editCompany', [
             'name'    => $company->name,
             'email'    => $company->email,
             'logo'    => $company->logo,

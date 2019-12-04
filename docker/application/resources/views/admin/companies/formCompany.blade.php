@@ -1,11 +1,3 @@
-{{--{{$company->name}}--}}
-{{--<hr />--}}
-{{--{{$company->email}}.--}}
-{{--<hr />--}}
-{{--{{$company->logo}}--}}
-{{--<hr />--}}
-{{--{{$company->website}}--}}
-
 <label for="name">Name</label>
 <input type="text" class="form-control" name="name" placeholder="Заголовок новости" value="{{ (old("name") == $name ? "" : $name) }}" required>
 @if ($errors->has('name'))
@@ -20,8 +12,8 @@
 
 <label for="logo">Logo</label>
 <div class="custom-file">
-    <input type="file" class="custom-file-input" id="validatedCustomFile" required>
-    <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+    <input type="file" name="logo" class="custom-file-input" id="logo" required>
+    <label class="custom-file-label" for="logo">Choose file...</label>
 </div>
 @if ($errors->has('logo'))
     <div class="text-danger">{{ $errors->first('logo') }}</div>

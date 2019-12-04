@@ -27,7 +27,7 @@ class UpdateCompany extends FormRequest
         return [
             'name'    => 'max:255',
             'email'    => 'email',
-            'logo'    => '',
+            'logo'    => 'file',
             'website' => 'url',
         ];
     }

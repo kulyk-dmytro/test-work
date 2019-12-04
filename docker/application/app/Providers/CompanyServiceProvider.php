@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Services\CompanyService;
 
 class CompanyServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,9 @@ class CompanyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind('App\Services\CompanyService', function ($app) {
+            return new CompanyService();
+        });
     }
 
     /**

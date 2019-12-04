@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateEmployer;
 use App\Services\EmployerService;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreEmployer;
+use Illuminate\Pagination\Paginator;
 
 class EmployerController extends Controller
 {
@@ -23,10 +24,20 @@ class EmployerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $employers = Employer::paginate(5);
-        return view('admin.employers', ['employers' => $employers]);
+        //$currentPage - which pagination page to display, by default the first
+        //$perPage - how many default items to display per page
+
+//        $currentPage = $request->input('current_page' , 1);
+        $perPage = $request->input('per_page', 5);
+
+//        Paginator::currentPageResolver(function () use ($currentPage) {
+//            return $currentPage;
+//        });
+
+        $employers = Employer::paginate($perPage);
+        return view('admin.employers.employers', ['employers' => $employers]);
     }
 
     /**
@@ -36,7 +47,7 @@ class EmployerController extends Controller
      */
     public function create()
     {
-        return view('admin.createEmployer', [
+        return view('admin.employers.createEmployer', [
             'first_name'    => [],
             'last_name'    => [],
             'email'    => [],
@@ -79,7 +90,7 @@ class EmployerController extends Controller
     public function edit($id)
     {
         $employer = Employer::with('company')->findOrFail($id);
-        return view('admin.editEmployer', [
+        return view('admin.employers.editEmployer', [
             'first_name'    => $employer->first_name,
             'last_name'    => $employer->last_name,
             'email'    => $employer->email,

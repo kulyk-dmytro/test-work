@@ -9,7 +9,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('companies.index')}}">Companies</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('employers.index')}}">Employers</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Create</li>
                     </ol>
                 </nav>
@@ -27,12 +27,11 @@
                 </div><br />
             @endif
         </div>
-
-        <form class="form-horizontal" action="{{route('companies.store')}}" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal" action="{{route('employers.store')}}" method="post">
             {{ csrf_field() }}
 
             {{-- Form include --}}
-            @include('admin.formCompany')
+            @include('admin.employers.formEmployer')
         </form>
     </div>
 
